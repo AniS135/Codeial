@@ -1,11 +1,12 @@
 const express=require('express');
+const expressLayouts=require('express-ejs-layouts');
 
 const router=express.Router();
 const homeController= require('../controllers/home_controller');
 
 console.log("Router loaded");
 
-
+router.use(expressLayouts);
 
 router.get('/',homeController.home);
 router.use('/users',require('./users'));
