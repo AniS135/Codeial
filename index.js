@@ -9,24 +9,30 @@ const { urlencoded } = require("express");
 const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
-const MongoStore=require('connect-mongo');
+const MongoStore=require('connect-mongodb-session')(session);
+const sassMiddleware=require('node-sass-middleware');
 
 const app=express();
 
 const port=8000;
 
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
+
 app.use(express.urlencoded());
 
 app.use(cookieParser());
 
+app.use(express.static('./assets'));
 app.use(expressLayouts);
-app.use(express.static(__dirname + '/assets'));
 
-
-app.set('layout extractStyles',true);
-app.set('layout extractScripts',true);
-
-
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
 // set up the view engine
 app.set('view engine','ejs');
@@ -42,9 +48,9 @@ app.use(session({
     cookie:{
         maxAge:(1000*60*100)
     },
-    store: MongoStore.create(
+    store: new MongoStore(
         {
-            mongoUrl: 'mongodb://localhost/codeial_db',
+            uri: 'mongodb://localhost/codeial_db',
             autoRemove: 'disabled '
         },
         function(err){

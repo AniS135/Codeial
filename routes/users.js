@@ -1,11 +1,10 @@
 const express=require('express');
-const expressLayouts=require('express-ejs-layouts');
+const router=express.Router();
 const passport=require('passport');
 
-const router=express.Router();
+
 const usersController= require('../controllers/users_controller');
 
-router.use(expressLayouts);
 
 router.get('/profile',passport.checkAuthentication,usersController.profile);
 
@@ -19,6 +18,8 @@ router.post('/create-session',passport.authenticate(
     'local',
     {failureRedirect:'/users/sign-in'},
 ),usersController.createSession);
+
+router.get('/sign-out',usersController.destroySession);
 
 
 module.exports=router;
