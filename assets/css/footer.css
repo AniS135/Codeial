@@ -8,7 +8,6 @@
     color: white;
     text-decoration: none; }
   #layout-footer .footer-nav ul {
-    list-style: none;
-    display: flex; }
+    list-style: none; }
     #layout-footer .footer-nav ul li {
       margin-right: 10px; }
