@@ -3,4 +3,4 @@ body {
   /* text-align: center; */
   /* font-size: 2rem; */ }
   body #layout-main {
-    height: 100vh; }
+    min-height: 100%; }
